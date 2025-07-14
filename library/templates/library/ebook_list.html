@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+
+{% block title %}All eBooks{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">All eBooks</h1>
+
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-md-4">
+            <input type="text" name="q" class="form-control" placeholder="Search by title or author" value="{{ request.GET.q }}">
+        </div>
+        <div class="col-md-3">
+            <select name="genre" class="form-select">
+                <option value="">All Genres</option>
+                <option value="fiction" {% if request.GET.genre == "fiction" %}selected{% endif %}>Fiction</option>
+                <option value="non-fiction" {% if request.GET.genre == "non-fiction" %}selected{% endif %}>Non-fiction</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <input type="number" name="max_price" class="form-control" placeholder="Max Price" value="{{ request.GET.max_price }}">
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Filter</button>
+        </div>
+    </form>
+
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+  {% for ebook in ebooks %}
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        {% if ebook.cover %}
+          <img src="{{ ebook.cover.url }}" class="card-img-top" alt="Cover of {{ ebook.title }}" style="height: 250px; object-fit: cover;">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ ebook.title }}</h5>
+          <p class="card-text">{{ ebook.author }}</p>
+          <a href="{% url 'ebook_detail' ebook.pk %}" class="btn btn-sm btn-primary">View Details</a>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p>No results found.</p>
+  {% endfor %}
+</div>
+
+{% endblock %}

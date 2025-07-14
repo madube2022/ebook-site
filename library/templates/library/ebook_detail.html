@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load custom_tags %}
+{% load humanize %}
+
+{% block title %}{{ ebook.title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card mb-3 shadow-sm">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{ ebook.cover.url }}" class="img-fluid rounded-start" alt="Cover of {{ ebook.title }}">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h3 class="card-title">{{ ebook.title }}</h3>
+                    <p class="card-text"><strong>Author:</strong> {{ ebook.author }}</p>
+                    <p class="card-text">{{ ebook.description }}</p>
+
+                    {% if user.is_authenticated %}
+                        {% if user|has_paid:ebook %}
+                            <a href="{% url 'download_ebook' ebook.pk %}" class="btn btn-primary">
+                                Download ({{ ebook.download_count }})
+                            </a>
+                        {% else %}
+                            <form action="{% url 'initiate_payment' ebook.pk %}" method="post">
+                                {% csrf_token %}
+                                <button class="btn btn-success">Buy Now (₦{{ ebook.price|intcomma }})</button>
+                            </form>
+                        {% endif %}
+                    {% else %}
+                        <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-warning">
+                            Login to Buy or Download
+                        </a>
+                    {% endif %}
+
+                    <a href="{% url 'ebook_list' %}" class="btn btn-secondary mt-3">Back to list</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
