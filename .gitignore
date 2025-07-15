@@ -1,0 +1,10 @@
+
+
+# VSCode
+.vscode/
+
+
+__pycache__/
+*.pyc
+staticfiles/
+.env
