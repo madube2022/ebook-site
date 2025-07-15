@@ -138,5 +138,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
-PAYSTACK_SECRET_KEY = os.getenv ('sk_test_c1d0411c6d0026a26e618266d0be5c52d1e4569d')
+PAYSTACK_SECRET_KEY = os.getenv ('sk_test_0ad4b4fbd9f70d0fc59086c3412138f6d6c94f2b')
 
