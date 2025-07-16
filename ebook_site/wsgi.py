@@ -8,8 +8,15 @@ https://docs.djangoproject.com/en/5.2/howto/deployment/wsgi/
 """
 
 import os
+import sys
+
 from pathlib import Path
 from dotenv import load_dotenv
+
+
+path = '/home/mabeloluchi/ebook-site'
+if path not in sys.path:
+    sys.path.append(path)
 
 # Define the base directory (2 levels up from this file)
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,3 +30,4 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ebook_site.settings')
 # Create the application
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
+
