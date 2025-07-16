@@ -15,31 +15,21 @@ from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-
 # Load environment variables from .env
 load_dotenv(dotenv_path=BASE_DIR / '.env')
 
-# Now get your env variables
+# Get environment variables
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG') == 'True'
+PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_SECRET_KEY')
 
-
-print("Loaded SECRET_KEY:", "sk_test_3dbab09894ab7a2f00cf7829ef47c3089cf54259" )
-
-
+ALLOWED_HOSTS = ['mabeloluchi.pythonanywhere.com']
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = os.getenv('SECRET_KEY')
-# SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = os.getenv('DEBUG') == 'True'
-
-ALLOWED_HOSTS = ['mabeloluchi.pythonanywhere.com']
-
 
 # Application definition
 INSTALLED_APPS = [
@@ -145,5 +135,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
-PAYSTACK_SECRET_KEY = os.getenv ('sk_test_3dbab09894ab7a2f00cf7829ef47c3089cf54259')
 
