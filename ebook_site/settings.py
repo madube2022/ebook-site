@@ -17,6 +17,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Load environment variables from .env
 load_dotenv(dotenv_path=BASE_DIR / '.env')
+print(">>> DEBUG:", os.getenv("DEBUG"))
+print(">>> SECRET_KEY:", os.getenv("SECRET_KEY"))
 
 # Get environment variables
 SECRET_KEY = os.getenv('SECRET_KEY')
