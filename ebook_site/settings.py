@@ -23,7 +23,8 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG') == 'True'
 PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_SECRET_KEY')
 
-ALLOWED_HOSTS = ['mabeloluchi.pythonanywhere.com']
+ALLOWED_HOSTS = ['mabeloluchi.pythonanywhere.com', '127.0.0.1', 'localhost']
+
 
 
 # Quick-start development settings - unsuitable for production
