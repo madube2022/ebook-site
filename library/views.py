@@ -11,6 +11,8 @@ import requests
 import json
 import uuid
 import os
+import zipfile
+from io import BytesIO
 
 from .models import Ebook, Payment
 from .forms import EbookUploadForm
@@ -95,12 +97,28 @@ def download_ebook(request, pk):
     ebook.download_count += 1
     ebook.save()
 
-    file_path = ebook.file.path
-    try:
-        return FileResponse(open(file_path, 'rb'), as_attachment=True)
-    except FileNotFoundError:
-        return HttpResponse("File not found.", status=404)
+    # Create an in-memory zip file
+    zip_buffer = BytesIO()
+    with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
+        # Add PDF
+        if ebook.file:
+            pdf_path = os.path.join(settings.MEDIA_ROOT, ebook.file.name)
+            if os.path.exists(pdf_path):
+                zip_file.write(pdf_path, os.path.basename(pdf_path))
 
+        # Add cover image
+        if ebook.cover:
+            cover_path = os.path.join(settings.MEDIA_ROOT, ebook.cover.name)
+            if os.path.exists(cover_path):
+                zip_file.write(cover_path, os.path.basename(cover_path))
+
+
+    # Prepare response
+    zip_buffer.seek(0)
+    response = HttpResponse(zip_buffer, content_type='application/zip')
+    response['Content-Disposition'] = f'attachment; filename="{ebook.title}.zip"'
+
+    return response
 
 @login_required
 def dashboard(request):

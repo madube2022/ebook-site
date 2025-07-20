@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Load environment variables from .env
-load_dotenv(dotenv_path='/home/mabeloluchi/ebook-site/.env')
+load_dotenv(dotenv_path=os.path.join(BASE_DIR, '.env'))
 
 print(">>> DEBUG:", os.getenv("DEBUG"))
 print(">>> SECRET_KEY:", os.getenv("SECRET_KEY"))
